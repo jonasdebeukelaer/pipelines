@@ -28,7 +28,8 @@ import {
 } from '../apis/run';
 import { logger } from './Utils';
 import WorkflowParser from './WorkflowParser';
-import { ApiExperiment } from 'src/apis/experiment';
+import { ApiExperiment } from '../apis/experiment';
+import { ApiTrigger } from '../apis/job/api';
 
 export interface MetricMetadata {
   count: number;
@@ -183,14 +184,43 @@ function getRecurringRunId(run?: ApiRun): string {
   return '';
 }
 
+function ensureRecurringRunParamsAreValid(
+  trigger: ApiTrigger | undefined,
+  maxConcurrentRuns: string | undefined,
+): void {
+  if (!trigger) {
+    throw new Error('trigger undefined');
+  }
+
+  const startDate = !!trigger!.cron_schedule
+    ? trigger!.cron_schedule!.start_time
+    : trigger!.periodic_schedule!.start_time;
+  const endDate = !!trigger!.cron_schedule
+    ? trigger!.cron_schedule!.end_time
+    : trigger!.periodic_schedule!.end_time;
+
+  if (startDate && endDate && startDate > endDate) {
+    throw new Error('End time cannot be earlier than start time');
+  }
+
+  if (!!trigger.cron_schedule && trigger.cron_schedule.cron?.split(' ').length !== 6) {
+    throw new Error('Cron schedule invalid');
+  }
+
+  if (
+    !!maxConcurrentRuns &&
+    (isNaN(+maxConcurrentRuns) || +maxConcurrentRuns < 1 || +maxConcurrentRuns > 10)
+  ) {
+    throw new Error('Maximum concurrent runs must be in range [1, 10]');
+  }
+}
+
 // TODO: This file needs tests
 export default {
   extractMetricMetadata,
   getAllExperimentReferences,
-  getFirstExperimentReference,
   getFirstExperimentReferenceId,
   getFirstExperimentReferenceName,
-  getNamespaceReferenceName,
   getParametersFromRun,
   getParametersFromRuntime,
   getPipelineId,
@@ -200,4 +230,5 @@ export default {
   getRecurringRunId,
   getWorkflowManifest,
   runsToMetricMetadataMap,
+  ensureRecurringRunParamsAreValid,
 };

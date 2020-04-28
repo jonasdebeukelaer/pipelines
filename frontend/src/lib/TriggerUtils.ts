@@ -35,6 +35,29 @@ export const triggers = new Map<TriggerType, { displayName: string }>([
 ]);
 
 export function getPeriodInSeconds(interval: PeriodicInterval, count: number): number {
+  return getIntervalSeconds(interval) * count;
+}
+
+export function getIntervalPeriodAndValue(seconds_str: string): [PeriodicInterval, number] {
+  const seconds = parseInt(seconds_str);
+
+  let suitedInterval = PeriodicInterval.MINUTE;
+  let suitedValue = seconds / 60;
+
+  const categories = Object.values(PeriodicInterval);
+  for (const i in categories) {
+    const interval = categories[i];
+    const s = getIntervalSeconds(interval);
+    if (s <= seconds && Number.isInteger(seconds / s)) {
+      suitedInterval = interval;
+      suitedValue = seconds / s;
+    }
+  }
+
+  return [suitedInterval, suitedValue];
+}
+
+function getIntervalSeconds(interval: PeriodicInterval): number {
   let intervalSeconds = 0;
   switch (interval) {
     case PeriodicInterval.MINUTE:
@@ -55,7 +78,7 @@ export function getPeriodInSeconds(interval: PeriodicInterval, count: number): n
     default:
       throw new Error('Invalid interval category: ' + interval);
   }
-  return intervalSeconds * count;
+  return intervalSeconds;
 }
 
 export function buildCron(

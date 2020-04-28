@@ -25,9 +25,11 @@ exports[`Trigger enables a single day on click 1`] = `
   </Input>
   <div>
     <Input
+      error={false}
       label="Maximum concurrent runs"
       onChange={[Function]}
       required={true}
+      type="number"
       value="10"
       variant="outlined"
     />
@@ -35,6 +37,7 @@ exports[`Trigger enables a single day on click 1`] = `
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
+        className=""
         control={
           <WithStyles(Checkbox)
             checked={false}
@@ -92,6 +95,7 @@ exports[`Trigger enables a single day on click 1`] = `
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
+        className=""
         control={
           <WithStyles(Checkbox)
             checked={false}
@@ -118,7 +122,7 @@ exports[`Trigger enables a single day on click 1`] = `
           }
         }
         type="date"
-        value="2018-12-21"
+        value="2018-12-28"
         variant="outlined"
         width={160}
       />
@@ -145,7 +149,7 @@ exports[`Trigger enables a single day on click 1`] = `
         width={120}
       />
     </div>
-    <span
+    <div
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
@@ -173,14 +177,20 @@ exports[`Trigger enables a single day on click 1`] = `
           </div>
         }
       />
-    </span>
-    <span
+    </div>
+    <div
       className="flex"
     >
-      Run every
+      <span
+        className=""
+      >
+        Run every
+      </span>
       <Separator />
       <Input
+        disabled={false}
         height={30}
+        id="intervalCategory"
         onChange={[Function]}
         required={true}
         select={true}
@@ -219,88 +229,98 @@ exports[`Trigger enables a single day on click 1`] = `
           Month
         </WithStyles(MenuItem)>
       </Input>
-    </span>
+      <div
+        className=""
+      >
+        <span>
+          On:
+        </span>
+        <WithStyles(WithFormControlContext(FormControlLabel))
+          control={
+            <WithStyles(Checkbox)
+              checked={false}
+              color="primary"
+              disabled={false}
+              onClick={[Function]}
+            />
+          }
+          label="All"
+        />
+        <Separator />
+        <WithStyles(Fab)
+          className="marginRight"
+          color="primary"
+          disabled={false}
+          key="0"
+          onClick={[Function]}
+          size="small"
+        >
+          S
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="secondary"
+          disabled={false}
+          key="1"
+          onClick={[Function]}
+          size="small"
+        >
+          M
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="primary"
+          disabled={false}
+          key="2"
+          onClick={[Function]}
+          size="small"
+        >
+          T
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="secondary"
+          disabled={false}
+          key="3"
+          onClick={[Function]}
+          size="small"
+        >
+          W
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="primary"
+          disabled={false}
+          key="4"
+          onClick={[Function]}
+          size="small"
+        >
+          T
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="primary"
+          disabled={false}
+          key="5"
+          onClick={[Function]}
+          size="small"
+        >
+          F
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="primary"
+          disabled={false}
+          key="6"
+          onClick={[Function]}
+          size="small"
+        >
+          S
+        </WithStyles(Fab)>
+      </div>
+    </div>
   </div>
   <div>
-    <div>
-      <span>
-        On:
-      </span>
-      <WithStyles(WithFormControlContext(FormControlLabel))
-        control={
-          <WithStyles(Checkbox)
-            checked={false}
-            color="primary"
-            onClick={[Function]}
-          />
-        }
-        label="All"
-      />
-      <Separator />
-      <WithStyles(Button)
-        color="primary"
-        key="0"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        S
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="secondary"
-        key="1"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        M
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="primary"
-        key="2"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        T
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="secondary"
-        key="3"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        W
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="primary"
-        key="4"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        T
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="primary"
-        key="5"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        F
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="primary"
-        key="6"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        S
-      </WithStyles(Button)>
-    </div>
     <div
       className="flex"
     >
@@ -328,6 +348,7 @@ exports[`Trigger enables a single day on click 1`] = `
     </div>
     <Input
       disabled={true}
+      error={false}
       label="cron expression"
       onChange={[Function]}
       value="0 0 0 ? * 0,2,4,5,6"
@@ -366,9 +387,11 @@ exports[`Trigger renders all week days enabled 1`] = `
   </Input>
   <div>
     <Input
+      error={false}
       label="Maximum concurrent runs"
       onChange={[Function]}
       required={true}
+      type="number"
       value="10"
       variant="outlined"
     />
@@ -376,6 +399,7 @@ exports[`Trigger renders all week days enabled 1`] = `
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
+        className=""
         control={
           <WithStyles(Checkbox)
             checked={false}
@@ -433,6 +457,7 @@ exports[`Trigger renders all week days enabled 1`] = `
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
+        className=""
         control={
           <WithStyles(Checkbox)
             checked={false}
@@ -459,7 +484,7 @@ exports[`Trigger renders all week days enabled 1`] = `
           }
         }
         type="date"
-        value="2018-12-21"
+        value="2018-12-28"
         variant="outlined"
         width={160}
       />
@@ -486,7 +511,7 @@ exports[`Trigger renders all week days enabled 1`] = `
         width={120}
       />
     </div>
-    <span
+    <div
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
@@ -514,14 +539,20 @@ exports[`Trigger renders all week days enabled 1`] = `
           </div>
         }
       />
-    </span>
-    <span
+    </div>
+    <div
       className="flex"
     >
-      Run every
+      <span
+        className=""
+      >
+        Run every
+      </span>
       <Separator />
       <Input
+        disabled={false}
         height={30}
+        id="intervalCategory"
         onChange={[Function]}
         required={true}
         select={true}
@@ -560,88 +591,98 @@ exports[`Trigger renders all week days enabled 1`] = `
           Month
         </WithStyles(MenuItem)>
       </Input>
-    </span>
+      <div
+        className=""
+      >
+        <span>
+          On:
+        </span>
+        <WithStyles(WithFormControlContext(FormControlLabel))
+          control={
+            <WithStyles(Checkbox)
+              checked={false}
+              color="primary"
+              disabled={false}
+              onClick={[Function]}
+            />
+          }
+          label="All"
+        />
+        <Separator />
+        <WithStyles(Fab)
+          className="marginRight"
+          color="secondary"
+          disabled={false}
+          key="0"
+          onClick={[Function]}
+          size="small"
+        >
+          S
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="secondary"
+          disabled={false}
+          key="1"
+          onClick={[Function]}
+          size="small"
+        >
+          M
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="secondary"
+          disabled={false}
+          key="2"
+          onClick={[Function]}
+          size="small"
+        >
+          T
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="secondary"
+          disabled={false}
+          key="3"
+          onClick={[Function]}
+          size="small"
+        >
+          W
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="secondary"
+          disabled={false}
+          key="4"
+          onClick={[Function]}
+          size="small"
+        >
+          T
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="secondary"
+          disabled={false}
+          key="5"
+          onClick={[Function]}
+          size="small"
+        >
+          F
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="secondary"
+          disabled={false}
+          key="6"
+          onClick={[Function]}
+          size="small"
+        >
+          S
+        </WithStyles(Fab)>
+      </div>
+    </div>
   </div>
   <div>
-    <div>
-      <span>
-        On:
-      </span>
-      <WithStyles(WithFormControlContext(FormControlLabel))
-        control={
-          <WithStyles(Checkbox)
-            checked={false}
-            color="primary"
-            onClick={[Function]}
-          />
-        }
-        label="All"
-      />
-      <Separator />
-      <WithStyles(Button)
-        color="secondary"
-        key="0"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        S
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="secondary"
-        key="1"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        M
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="secondary"
-        key="2"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        T
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="secondary"
-        key="3"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        W
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="secondary"
-        key="4"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        T
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="secondary"
-        key="5"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        F
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="secondary"
-        key="6"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        S
-      </WithStyles(Button)>
-    </div>
     <div
       className="flex"
     >
@@ -669,6 +710,7 @@ exports[`Trigger renders all week days enabled 1`] = `
     </div>
     <Input
       disabled={true}
+      error={false}
       label="cron expression"
       onChange={[Function]}
       value="0 0 0 ? *"
@@ -707,9 +749,11 @@ exports[`Trigger renders periodic schedule controls for initial render 1`] = `
   </Input>
   <div>
     <Input
+      error={false}
       label="Maximum concurrent runs"
       onChange={[Function]}
       required={true}
+      type="number"
       value="10"
       variant="outlined"
     />
@@ -717,6 +761,7 @@ exports[`Trigger renders periodic schedule controls for initial render 1`] = `
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
+        className=""
         control={
           <WithStyles(Checkbox)
             checked={false}
@@ -774,6 +819,7 @@ exports[`Trigger renders periodic schedule controls for initial render 1`] = `
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
+        className=""
         control={
           <WithStyles(Checkbox)
             checked={false}
@@ -800,7 +846,7 @@ exports[`Trigger renders periodic schedule controls for initial render 1`] = `
           }
         }
         type="date"
-        value="2018-12-21"
+        value="2018-12-28"
         variant="outlined"
         width={160}
       />
@@ -827,7 +873,7 @@ exports[`Trigger renders periodic schedule controls for initial render 1`] = `
         width={120}
       />
     </div>
-    <span
+    <div
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
@@ -855,11 +901,15 @@ exports[`Trigger renders periodic schedule controls for initial render 1`] = `
           </div>
         }
       />
-    </span>
-    <span
+    </div>
+    <div
       className="flex"
     >
-      Run every
+      <span
+        className=""
+      >
+        Run every
+      </span>
       <div
         className="flex"
       >
@@ -877,7 +927,9 @@ exports[`Trigger renders periodic schedule controls for initial render 1`] = `
       </div>
       <Separator />
       <Input
+        disabled={false}
         height={30}
+        id="intervalCategory"
         onChange={[Function]}
         required={true}
         select={true}
@@ -916,7 +968,7 @@ exports[`Trigger renders periodic schedule controls for initial render 1`] = `
           Months
         </WithStyles(MenuItem)>
       </Input>
-    </span>
+    </div>
   </div>
 </div>
 `;
@@ -946,9 +998,11 @@ exports[`Trigger renders periodic schedule controls if the trigger type is CRON 
   </Input>
   <div>
     <Input
+      error={false}
       label="Maximum concurrent runs"
       onChange={[Function]}
       required={true}
+      type="number"
       value="10"
       variant="outlined"
     />
@@ -956,6 +1010,7 @@ exports[`Trigger renders periodic schedule controls if the trigger type is CRON 
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
+        className=""
         control={
           <WithStyles(Checkbox)
             checked={false}
@@ -1013,6 +1068,7 @@ exports[`Trigger renders periodic schedule controls if the trigger type is CRON 
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
+        className=""
         control={
           <WithStyles(Checkbox)
             checked={false}
@@ -1039,7 +1095,7 @@ exports[`Trigger renders periodic schedule controls if the trigger type is CRON 
           }
         }
         type="date"
-        value="2018-12-21"
+        value="2018-12-28"
         variant="outlined"
         width={160}
       />
@@ -1066,7 +1122,7 @@ exports[`Trigger renders periodic schedule controls if the trigger type is CRON 
         width={120}
       />
     </div>
-    <span
+    <div
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
@@ -1094,14 +1150,20 @@ exports[`Trigger renders periodic schedule controls if the trigger type is CRON 
           </div>
         }
       />
-    </span>
-    <span
+    </div>
+    <div
       className="flex"
     >
-      Run every
+      <span
+        className=""
+      >
+        Run every
+      </span>
       <Separator />
       <Input
+        disabled={false}
         height={30}
+        id="intervalCategory"
         onChange={[Function]}
         required={true}
         select={true}
@@ -1140,7 +1202,7 @@ exports[`Trigger renders periodic schedule controls if the trigger type is CRON 
           Month
         </WithStyles(MenuItem)>
       </Input>
-    </span>
+    </div>
   </div>
   <div>
     <div
@@ -1170,6 +1232,7 @@ exports[`Trigger renders periodic schedule controls if the trigger type is CRON 
     </div>
     <Input
       disabled={true}
+      error={false}
       label="cron expression"
       onChange={[Function]}
       value="0 * * * * ?"
@@ -1208,9 +1271,11 @@ exports[`Trigger renders week days if the trigger type is CRON and interval is w
   </Input>
   <div>
     <Input
+      error={false}
       label="Maximum concurrent runs"
       onChange={[Function]}
       required={true}
+      type="number"
       value="10"
       variant="outlined"
     />
@@ -1218,6 +1283,7 @@ exports[`Trigger renders week days if the trigger type is CRON and interval is w
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
+        className=""
         control={
           <WithStyles(Checkbox)
             checked={false}
@@ -1275,6 +1341,7 @@ exports[`Trigger renders week days if the trigger type is CRON and interval is w
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
+        className=""
         control={
           <WithStyles(Checkbox)
             checked={false}
@@ -1301,7 +1368,7 @@ exports[`Trigger renders week days if the trigger type is CRON and interval is w
           }
         }
         type="date"
-        value="2018-12-21"
+        value="2018-12-28"
         variant="outlined"
         width={160}
       />
@@ -1328,7 +1395,7 @@ exports[`Trigger renders week days if the trigger type is CRON and interval is w
         width={120}
       />
     </div>
-    <span
+    <div
       className="flex"
     >
       <WithStyles(WithFormControlContext(FormControlLabel))
@@ -1356,14 +1423,20 @@ exports[`Trigger renders week days if the trigger type is CRON and interval is w
           </div>
         }
       />
-    </span>
-    <span
+    </div>
+    <div
       className="flex"
     >
-      Run every
+      <span
+        className=""
+      >
+        Run every
+      </span>
       <Separator />
       <Input
+        disabled={false}
         height={30}
+        id="intervalCategory"
         onChange={[Function]}
         required={true}
         select={true}
@@ -1402,88 +1475,98 @@ exports[`Trigger renders week days if the trigger type is CRON and interval is w
           Month
         </WithStyles(MenuItem)>
       </Input>
-    </span>
+      <div
+        className=""
+      >
+        <span>
+          On:
+        </span>
+        <WithStyles(WithFormControlContext(FormControlLabel))
+          control={
+            <WithStyles(Checkbox)
+              checked={true}
+              color="primary"
+              disabled={false}
+              onClick={[Function]}
+            />
+          }
+          label="All"
+        />
+        <Separator />
+        <WithStyles(Fab)
+          className="marginRight"
+          color="primary"
+          disabled={false}
+          key="0"
+          onClick={[Function]}
+          size="small"
+        >
+          S
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="primary"
+          disabled={false}
+          key="1"
+          onClick={[Function]}
+          size="small"
+        >
+          M
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="primary"
+          disabled={false}
+          key="2"
+          onClick={[Function]}
+          size="small"
+        >
+          T
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="primary"
+          disabled={false}
+          key="3"
+          onClick={[Function]}
+          size="small"
+        >
+          W
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="primary"
+          disabled={false}
+          key="4"
+          onClick={[Function]}
+          size="small"
+        >
+          T
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="primary"
+          disabled={false}
+          key="5"
+          onClick={[Function]}
+          size="small"
+        >
+          F
+        </WithStyles(Fab)>
+        <WithStyles(Fab)
+          className="marginRight"
+          color="primary"
+          disabled={false}
+          key="6"
+          onClick={[Function]}
+          size="small"
+        >
+          S
+        </WithStyles(Fab)>
+      </div>
+    </div>
   </div>
   <div>
-    <div>
-      <span>
-        On:
-      </span>
-      <WithStyles(WithFormControlContext(FormControlLabel))
-        control={
-          <WithStyles(Checkbox)
-            checked={true}
-            color="primary"
-            onClick={[Function]}
-          />
-        }
-        label="All"
-      />
-      <Separator />
-      <WithStyles(Button)
-        color="primary"
-        key="0"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        S
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="primary"
-        key="1"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        M
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="primary"
-        key="2"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        T
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="primary"
-        key="3"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        W
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="primary"
-        key="4"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        T
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="primary"
-        key="5"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        F
-      </WithStyles(Button)>
-      <WithStyles(Button)
-        color="primary"
-        key="6"
-        mini={true}
-        onClick={[Function]}
-        variant="fab"
-      >
-        S
-      </WithStyles(Button)>
-    </div>
     <div
       className="flex"
     >
@@ -1511,6 +1594,7 @@ exports[`Trigger renders week days if the trigger type is CRON and interval is w
     </div>
     <Input
       disabled={true}
+      error={false}
       label="cron expression"
       onChange={[Function]}
       value="0 0 0 ? * *"

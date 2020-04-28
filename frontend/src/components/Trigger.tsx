@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -24,11 +24,12 @@ import { ApiTrigger } from '../apis/job';
 import { HelpButton } from '../atoms/HelpButton';
 import Input from '../atoms/Input';
 import Separator from '../atoms/Separator';
-import { commonCss } from '../Css';
+import { commonCss, padding } from '../Css';
 import {
   buildCron,
   buildTrigger,
   dateToPickerFormat,
+  getIntervalPeriodAndValue,
   PeriodicInterval,
   pickersToDate,
   triggers,
@@ -36,6 +37,9 @@ import {
 } from '../lib/TriggerUtils';
 
 interface TriggerProps {
+  trigger?: ApiTrigger;
+  maxConcurrentRuns?: string;
+  catchup?: boolean;
   onChange?: (config: {
     trigger?: ApiTrigger;
     maxConcurrentRuns?: string;
@@ -64,44 +68,74 @@ const css = stylesheet({
   noMargin: {
     margin: 0,
   },
+  marginRight: {
+    margin: '0 5px 0 0',
+  },
 });
 
 export default class Trigger extends React.Component<TriggerProps, TriggerState> {
-  public state = (() => {
-    const now = new Date();
-    const inAWeek = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() + 7,
-      now.getHours(),
-      now.getMinutes(),
-    );
-    const [startDate, startTime] = dateToPickerFormat(now);
-    const [endDate, endTime] = dateToPickerFormat(inAWeek);
+  constructor(props: TriggerProps) {
+    super(props);
 
-    return {
-      catchup: true,
-      cron: '',
-      editCron: false,
-      endDate,
-      endTime,
-      hasEndDate: false,
-      hasStartDate: false,
-      intervalCategory: PeriodicInterval.MINUTE,
-      intervalValue: 1,
-      maxConcurrentRuns: '10',
-      selectedDays: new Array(7).fill(true),
-      startDate,
-      startTime,
-      type: TriggerType.INTERVALED,
+    let startDateTime: Date;
+    if (!!props.trigger?.cron_schedule?.start_time) {
+      startDateTime = new Date(props.trigger.cron_schedule.start_time);
+    } else if (!!props.trigger?.periodic_schedule?.start_time) {
+      startDateTime = new Date(props.trigger.periodic_schedule.start_time);
+    } else {
+      startDateTime = new Date();
+    }
+
+    let endDateTime: Date;
+    if (!!props.trigger?.cron_schedule?.end_time) {
+      endDateTime = new Date(props.trigger.cron_schedule.end_time);
+    } else if (!!props.trigger?.periodic_schedule?.end_time) {
+      endDateTime = new Date(props.trigger.periodic_schedule.end_time);
+    } else {
+      endDateTime = new Date(startDateTime);
+      // default to a week after the start date
+      endDateTime.setDate(endDateTime.getDate() + 7);
+    }
+
+    const [startDate, startTime] = dateToPickerFormat(startDateTime);
+    const [endDate, endTime] = dateToPickerFormat(endDateTime);
+
+    let intervalCategory = PeriodicInterval.MINUTE;
+    let intervalValue = 1;
+    if (!!props.trigger?.periodic_schedule?.interval_second) {
+      [intervalCategory, intervalValue] = getIntervalPeriodAndValue(
+        props.trigger.periodic_schedule.interval_second,
+      );
+    }
+
+    let selectedDays;
+    if (intervalCategory === PeriodicInterval.WEEK && !!props.trigger?.cron_schedule?.cron) {
+      selectedDays = new Array(7).fill(false);
+      const days = props.trigger.cron_schedule.cron.split(' ')[5].split(',');
+      days.every(day_str => (selectedDays[parseInt(day_str)] = true));
+    } else {
+      selectedDays = new Array(7).fill(true);
+    }
+
+    this.state = {
+      catchup: props.catchup === undefined ? true : props.catchup,
+      cron: !!props.trigger?.cron_schedule?.cron ? props.trigger.cron_schedule.cron : '0 * * * * ?',
+      editCron: !!props.trigger?.cron_schedule?.cron,
+      endDate: endDate,
+      endTime: endTime,
+      hasEndDate:
+        !!props.trigger?.cron_schedule?.end_time || !!props.trigger?.periodic_schedule?.end_time,
+      hasStartDate:
+        !!props.trigger?.cron_schedule?.start_time ||
+        !!props.trigger?.periodic_schedule?.start_time,
+      intervalCategory: intervalCategory,
+      intervalValue: intervalValue,
+      maxConcurrentRuns: props.maxConcurrentRuns ? props.maxConcurrentRuns : '10',
+      selectedDays: selectedDays,
+      startDate: startDate,
+      startTime: startTime,
+      type: !!props.trigger?.cron_schedule ? TriggerType.CRON : TriggerType.INTERVALED,
     };
-  })();
-
-  public componentDidMount(): void {
-    // TODO: This is called here because NewRun only updates its Trigger in state when onChange is
-    // called on the Trigger, which without this may never happen if a user doesn't interact with
-    // the Trigger. NewRun should probably keep the Trigger state and pass it down as a prop to this
-    this._updateTrigger();
   }
 
   public render(): JSX.Element {
@@ -143,13 +177,16 @@ export default class Trigger extends React.Component<TriggerProps, TriggerState>
           <Input
             label='Maximum concurrent runs'
             required={true}
+            type='number'
             onChange={this.handleChange('maxConcurrentRuns')}
             value={maxConcurrentRuns}
+            error={+maxConcurrentRuns > 10 || +maxConcurrentRuns < 1}
             variant='outlined'
           />
 
           <div className={commonCss.flex}>
             <FormControlLabel
+              className={padding(7, 't')}
               control={
                 <Checkbox
                   checked={hasStartDate}
@@ -184,6 +221,7 @@ export default class Trigger extends React.Component<TriggerProps, TriggerState>
 
           <div className={commonCss.flex}>
             <FormControlLabel
+              className={padding(7, 't')}
               control={
                 <Checkbox
                   checked={hasEndDate}
@@ -215,7 +253,7 @@ export default class Trigger extends React.Component<TriggerProps, TriggerState>
               variant='outlined'
             />
           </div>
-          <span className={commonCss.flex}>
+          <div className={commonCss.flex}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -245,10 +283,10 @@ export default class Trigger extends React.Component<TriggerProps, TriggerState>
                 </div>
               }
             />
-          </span>
+          </div>
 
-          <span className={commonCss.flex}>
-            Run every
+          <div className={commonCss.flex}>
+            <span className={padding(15, 't')}>Run every</span>
             {type === TriggerType.INTERVALED && (
               <div className={commonCss.flex}>
                 <Separator />
@@ -266,6 +304,7 @@ export default class Trigger extends React.Component<TriggerProps, TriggerState>
             )}
             <Separator />
             <Input
+              id='intervalCategory'
               required={true}
               select={true}
               onChange={this.handleChange('intervalCategory')}
@@ -273,6 +312,7 @@ export default class Trigger extends React.Component<TriggerProps, TriggerState>
               height={30}
               width={95}
               variant='outlined'
+              disabled={type === TriggerType.CRON && editCron}
             >
               {Object.keys(PeriodicInterval).map((interval, i) => (
                 <MenuItem key={i} value={PeriodicInterval[interval]}>
@@ -280,13 +320,9 @@ export default class Trigger extends React.Component<TriggerProps, TriggerState>
                 </MenuItem>
               ))}
             </Input>
-          </span>
-        </div>
 
-        {type === TriggerType.CRON && (
-          <div>
-            {intervalCategory === PeriodicInterval.WEEK && (
-              <div>
+            {type === TriggerType.CRON && intervalCategory === PeriodicInterval.WEEK && (
+              <div className={padding(16, 'lt')}>
                 <span>On:</span>
                 <FormControlLabel
                   control={
@@ -294,25 +330,31 @@ export default class Trigger extends React.Component<TriggerProps, TriggerState>
                       checked={this._isAllDaysChecked()}
                       color='primary'
                       onClick={this._toggleCheckAllDays.bind(this)}
+                      disabled={type === TriggerType.CRON && editCron}
                     />
                   }
                   label='All'
                 />
                 <Separator />
                 {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
-                  <Button
-                    variant='fab'
-                    mini={true}
+                  <Fab
+                    className={css.marginRight}
+                    size='small'
                     key={i}
                     onClick={() => this._toggleDay(i)}
                     color={selectedDays[i] ? 'primary' : 'secondary'}
+                    disabled={type === TriggerType.CRON && editCron}
                   >
                     {day}
-                  </Button>
+                  </Fab>
                 ))}
               </div>
             )}
+          </div>
+        </div>
 
+        {type === TriggerType.CRON && (
+          <div>
             <div className={commonCss.flex}>
               <FormControlLabel
                 control={
@@ -340,6 +382,7 @@ export default class Trigger extends React.Component<TriggerProps, TriggerState>
               value={cron}
               width={300}
               disabled={!editCron}
+              error={editCron && cron.split(' ').length !== 6}
               variant='outlined'
             />
 

@@ -24,7 +24,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Input from '../atoms/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import NewRunParameters from '../components/NewRunParameters';
+import RunParameters from '../components/RunParameters';
 import Radio from '@material-ui/core/Radio';
 import ResourceSelector from './ResourceSelector';
 import RunUtils from '../lib/RunUtils';
@@ -125,6 +125,12 @@ export class NewRun extends Page<{ namespace?: string }, NewRunState> {
     isClone: false,
     isFirstRunInExperiment: false,
     isRecurringRun: false,
+    trigger: {
+      periodic_schedule: {
+        interval_second: '60',
+      },
+    },
+    maxConcurrentRuns: '10',
     parameters: [],
     pipelineName: '',
     pipelineSelectorOpen: false,
@@ -190,12 +196,15 @@ export class NewRun extends Page<{ namespace?: string }, NewRunState> {
       isClone,
       isFirstRunInExperiment,
       isRecurringRun,
+      maxConcurrentRuns,
+      catchup,
       parameters,
       pipelineName,
       pipelineVersionName,
       pipelineSelectorOpen,
       pipelineVersionSelectorOpen,
       runName,
+      trigger,
       unconfirmedSelectedExperiment,
       unconfirmedSelectedPipeline,
       unconfirmedSelectedPipelineVersion,
@@ -559,6 +568,9 @@ export class NewRun extends Page<{ namespace?: string }, NewRunState> {
               <div>Choose a method by which new runs will be triggered</div>
 
               <Trigger
+                trigger={trigger}
+                maxConcurrentRuns={maxConcurrentRuns}
+                catchup={catchup}
                 onChange={({ trigger, maxConcurrentRuns, catchup }) =>
                   this.setStateSafe(
                     {
@@ -574,7 +586,7 @@ export class NewRun extends Page<{ namespace?: string }, NewRunState> {
           )}
 
           {/* Run parameters form */}
-          <NewRunParameters
+          <RunParameters
             initialParams={parameters}
             titleMessage={this._runParametersMessage()}
             handleParamChange={this._handleParamChange.bind(this)}
@@ -1160,21 +1172,7 @@ export class NewRun extends Page<{ namespace?: string }, NewRunState> {
 
       const hasTrigger = trigger && (!!trigger.cron_schedule || !!trigger.periodic_schedule);
       if (hasTrigger) {
-        const startDate = !!trigger!.cron_schedule
-          ? trigger!.cron_schedule!.start_time
-          : trigger!.periodic_schedule!.start_time;
-        const endDate = !!trigger!.cron_schedule
-          ? trigger!.cron_schedule!.end_time
-          : trigger!.periodic_schedule!.end_time;
-        if (startDate && endDate && startDate > endDate) {
-          throw new Error('End date/time cannot be earlier than start date/time');
-        }
-        const validMaxConcurrentRuns = (input: string) =>
-          !isNaN(Number.parseInt(input, 10)) && +input > 0;
-
-        if (maxConcurrentRuns !== undefined && !validMaxConcurrentRuns(maxConcurrentRuns)) {
-          throw new Error('For triggered runs, maximum concurrent runs must be a positive number');
-        }
+        RunUtils.ensureRecurringRunParamsAreValid(trigger, maxConcurrentRuns);
       }
 
       this.setStateSafe({ errorMessage: '' });

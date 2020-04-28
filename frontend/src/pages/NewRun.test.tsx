@@ -1267,10 +1267,10 @@ describe('NewRun', () => {
       });
 
       tree
-        .find('input#newRunPipelineParam0')
+        .find('input#runPipelineParam0')
         .simulate('change', { target: { value: '{"test2": "value2"}' } });
 
-      tree.find('TextField#newRunPipelineParam0 Button').simulate('click');
+      tree.find('TextField#runPipelineParam0 Button').simulate('click');
 
       tree.find('BusyButton#startNewRunBtn').simulate('click');
       // The start APIs are called in a callback triggered by clicking 'Start', so we wait again
@@ -1752,9 +1752,7 @@ describe('NewRun', () => {
       });
       await TestUtils.flushPromises();
 
-      expect(tree.state('errorMessage')).toBe(
-        'End date/time cannot be earlier than start date/time',
-      );
+      expect(tree.state('errorMessage')).toBe('End time cannot be earlier than start time');
     });
 
     it('displays an error message if cron schedule end date/time is earlier than start date/time', async () => {
@@ -1779,9 +1777,7 @@ describe('NewRun', () => {
       });
       await TestUtils.flushPromises();
 
-      expect(tree.state('errorMessage')).toBe(
-        'End date/time cannot be earlier than start date/time',
-      );
+      expect(tree.state('errorMessage')).toBe('End time cannot be earlier than start time');
     });
 
     it('displays an error message if max concurrent runs is negative', async () => {
@@ -1806,9 +1802,7 @@ describe('NewRun', () => {
       });
       await TestUtils.flushPromises();
 
-      expect(tree.state('errorMessage')).toBe(
-        'For triggered runs, maximum concurrent runs must be a positive number',
-      );
+      expect(tree.state('errorMessage')).toBe('Maximum concurrent runs must be in range [1, 10]');
     });
 
     it('displays an error message if max concurrent runs is not a number', async () => {
@@ -1833,9 +1827,7 @@ describe('NewRun', () => {
       });
       await TestUtils.flushPromises();
 
-      expect(tree.state('errorMessage')).toBe(
-        'For triggered runs, maximum concurrent runs must be a positive number',
-      );
+      expect(tree.state('errorMessage')).toBe('Maximum concurrent runs must be in range [1, 10]');
     });
   });
 });

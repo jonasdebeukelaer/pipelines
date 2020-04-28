@@ -363,18 +363,19 @@ describe('Trigger', () => {
     it('builds a cron with the manually specified cron string, even if days are toggled', () => {
       const spy = jest.fn();
       const tree = shallow(<Trigger onChange={spy} />);
-      (tree.instance() as Trigger).handleChange('type')({ target: { value: TriggerType.CRON } });
-      (tree.instance() as Trigger).handleChange('intervalCategory')({
+      const triggerTree = tree.instance() as Trigger;
+      triggerTree.handleChange('type')({ target: { value: TriggerType.CRON } });
+      triggerTree.handleChange('intervalCategory')({
         target: { value: PeriodicInterval.WEEK },
       });
       (tree.instance() as any)._toggleCheckAllDays();
       (tree.instance() as any)._toggleDay(1);
       (tree.instance() as any)._toggleDay(5);
       (tree.instance() as any)._toggleDay(6);
-      (tree.instance() as Trigger).handleChange('editCron')({
+      triggerTree.handleChange('editCron')({
         target: { type: 'checkbox', checked: true },
       });
-      (tree.instance() as Trigger).handleChange('cron')({
+      triggerTree.handleChange('cron')({
         target: { value: 'oops this will break!' },
       });
       expect(spy).toHaveBeenLastCalledWith({
@@ -383,6 +384,12 @@ describe('Trigger', () => {
           cron_schedule: { ...CRON_DEFAULT, cron: 'oops this will break!' },
         },
       });
+      expect(
+        tree
+          .find('#intervalCategory')
+          .at(0)
+          .prop('disabled'),
+      ).toBe(true);
     });
   });
 });

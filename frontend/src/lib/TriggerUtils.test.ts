@@ -23,6 +23,7 @@ import {
   TriggerType,
   dateToPickerFormat,
   triggerDisplayString,
+  getIntervalPeriodAndValue,
 } from './TriggerUtils';
 import { ApiTrigger } from '../apis/job';
 
@@ -67,6 +68,32 @@ describe('TriggerUtils', () => {
     });
   });
 
+  describe('getIntervalPeriodAndValue', () => {
+    it('returns minutes if 59 minutes', () => {
+      expect(getIntervalPeriodAndValue('3540')).toStrictEqual([PeriodicInterval.MINUTE, 59]);
+    });
+
+    it('returns in hours if 32 hours', () => {
+      expect(getIntervalPeriodAndValue('115200')).toStrictEqual([PeriodicInterval.HOUR, 32]);
+    });
+
+    it('returns in days if 24 days', () => {
+      expect(getIntervalPeriodAndValue('2073600')).toStrictEqual([PeriodicInterval.DAY, 24]);
+    });
+
+    it('returns in weeks if 28 days', () => {
+      expect(getIntervalPeriodAndValue('2419200')).toStrictEqual([PeriodicInterval.WEEK, 4]);
+    });
+
+    it('returns in Months if 90 days', () => {
+      expect(getIntervalPeriodAndValue('7776000')).toStrictEqual([PeriodicInterval.MONTH, 3]);
+    });
+
+    it('returns minutes if other amount', () => {
+      expect(getIntervalPeriodAndValue('66660.60')).toStrictEqual([PeriodicInterval.MINUTE, 1111]);
+    });
+  });
+
   describe('buildCron', () => {
     it('builds (every minute) cron without start date, no selected days', () => {
       expect(buildCron(undefined, PeriodicInterval.MINUTE, [])).toBe('0 * * * * ?');
@@ -106,7 +133,7 @@ describe('TriggerUtils', () => {
     });
 
     function setToSelectedDays(selected: Set<number>): boolean[] {
-      return new Array(7).fill(false).map((_, i) => (selected.has(i) ? true : false));
+      return new Array(7).fill(false).map((_, i) => selected.has(i));
     }
 
     it('adds no days when building weekly cron with no selected days, no star date', () => {

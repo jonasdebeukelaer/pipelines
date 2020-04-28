@@ -16,7 +16,7 @@
 
 import * as React from 'react';
 import { mount, shallow } from 'enzyme';
-import NewRunParameters, { NewRunParametersProps } from './NewRunParameters';
+import RunParameters, { RunParametersProps } from './RunParameters';
 
 describe('NewRunParameters', () => {
   it('shows parameters', () => {
@@ -24,8 +24,8 @@ describe('NewRunParameters', () => {
       handleParamChange: jest.fn(),
       initialParams: [{ name: 'testParam', value: 'testVal' }],
       titleMessage: 'Specify parameters required by the pipeline',
-    } as NewRunParametersProps;
-    expect(shallow(<NewRunParameters {...props} />)).toMatchSnapshot();
+    } as RunParametersProps;
+    expect(shallow(<RunParameters {...props} />)).toMatchSnapshot();
   });
 
   it('does not display any text fields if there are no parameters', () => {
@@ -33,8 +33,8 @@ describe('NewRunParameters', () => {
       handleParamChange: jest.fn(),
       initialParams: [],
       titleMessage: 'This pipeline has no parameters',
-    } as NewRunParametersProps;
-    expect(shallow(<NewRunParameters {...props} />)).toMatchSnapshot();
+    } as RunParametersProps;
+    expect(shallow(<RunParameters {...props} />)).toMatchSnapshot();
   });
 
   it('clicking the open editor button for json parameters displays an editor', () => {
@@ -43,8 +43,8 @@ describe('NewRunParameters', () => {
       handleParamChange,
       initialParams: [{ name: 'testParam', value: '{"test":"value"}' }],
       titleMessage: 'Specify json parameters required by the pipeline',
-    } as NewRunParametersProps;
-    const tree = mount(<NewRunParameters {...props} />);
+    } as RunParametersProps;
+    const tree = mount(<RunParameters {...props} />);
     tree
       .findWhere(el => el.text() === 'Open Json Editor')
       .hostNodes()
@@ -64,11 +64,11 @@ describe('NewRunParameters', () => {
         { name: 'testParam2', value: 'testVal2' },
       ],
       titleMessage: 'Specify parameters required by the pipeline',
-    } as NewRunParametersProps;
+    } as RunParametersProps;
 
-    const tree = mount(<NewRunParameters {...props} />);
+    const tree = mount(<RunParameters {...props} />);
     tree
-      .find('input#newRunPipelineParam1')
+      .find('input#runPipelineParam1')
       .simulate('change', { target: { value: 'test param value' } });
     expect(handleParamChange).toHaveBeenCalledTimes(1);
     expect(handleParamChange).toHaveBeenLastCalledWith(1, 'test param value');

@@ -24,7 +24,7 @@ import { classes, stylesheet } from 'typestyle';
 import { color, spacing } from '../Css';
 import Editor from './Editor';
 
-export interface NewRunParametersProps {
+export interface RunParametersProps {
   initialParams: ApiParameter[];
   titleMessage: string;
   handleParamChange: (index: number, value: string) => void;
@@ -54,7 +54,7 @@ const css = stylesheet({
   },
 });
 
-class NewRunParameters extends React.Component<NewRunParametersProps> {
+class RunParameters extends React.Component<RunParametersProps> {
   public render(): JSX.Element | null {
     const { handleParamChange, initialParams, titleMessage } = this.props;
 
@@ -68,7 +68,7 @@ class NewRunParameters extends React.Component<NewRunParametersProps> {
               return (
                 <ParamEditor
                   key={i}
-                  id={`newRunPipelineParam${i}`}
+                  id={`runPipelineParam${i}`}
                   onChange={(value: string) => handleParamChange(i, value)}
                   param={param}
                 />
@@ -192,4 +192,4 @@ class ParamEditor extends React.Component<ParamEditorProps, ParamEditorState> {
   }
 }
 
-export default NewRunParameters;
+export default RunParameters;
