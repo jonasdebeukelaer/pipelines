@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditRecurringRun renders the page with details filled in 1`] = `
+<div
+  className="page"
+>
+  <div
+    className="page"
+  >
+    <div
+      className=""
+    >
+      <div
+        className="header"
+      >
+        General Params
+      </div>
+      <Input
+        error={false}
+        id="runName"
+        label="Run name"
+        multiline={false}
+        onChange={[Function]}
+        required={true}
+        value="test job"
+        variant="outlined"
+      />
+      <Input
+        id="description"
+        label="Description"
+        multiline={false}
+        onChange={[Function]}
+        value="test job description"
+        variant="outlined"
+      />
+      <Input
+        id="serviceAccount"
+        label="Service Account"
+        multiline={false}
+        onChange={[Function]}
+        value=""
+        variant="outlined"
+      />
+      <div
+        className="header"
+      >
+        Run trigger
+      </div>
+      <Trigger
+        catchup={true}
+        maxConcurrentRuns="50"
+        onChange={[Function]}
+        trigger={
+          Object {
+            "periodic_schedule": Object {
+              "end_time": 2018-11-09T08:07:06.000Z,
+              "interval_second": "3600",
+              "start_time": 2018-10-08T06:06:00.000Z,
+            },
+          }
+        }
+      />
+      <RunParameters
+        handleParamChange={[Function]}
+        initialParams={
+          Array [
+            Object {
+              "name": "param1",
+              "value": "value1",
+            },
+          ]
+        }
+        titleMessage="Edit pipeline parameters"
+      />
+    </div>
+    <div
+      className="flex"
+    >
+      <BusyButton
+        busy={false}
+        className="buttonAction"
+        disabled={false}
+        id="saveBtn"
+        onClick={[Function]}
+        title="Save"
+      />
+      <WithStyles(Button)
+        id="cancelBtn"
+        onClick={[Function]}
+      >
+        Cancel
+      </WithStyles(Button)>
+      <div
+        className=""
+        id="errorMessage"
+        style={
+          Object {
+            "color": "red",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;

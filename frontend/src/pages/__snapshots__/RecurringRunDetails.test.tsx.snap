@@ -11,12 +11,24 @@ exports[`RecurringRunDetails renders a recurring run with cron schedule 1`] = `
       fields={
         Array [
           Array [
+            "Pipeline Name",
+            "not found",
+          ],
+          Array [
+            "Pipeline version ID",
+            "not found",
+          ],
+          Array [
             "Description",
             "test job description",
           ],
           Array [
             "Created at",
             "9/5/2018, 4:03:02 AM",
+          ],
+          Array [
+            "Updated at",
+            "-",
           ],
         ]
       }
@@ -79,12 +91,24 @@ exports[`RecurringRunDetails renders a recurring run with periodic schedule 1`] 
       fields={
         Array [
           Array [
+            "Pipeline Name",
+            "not found",
+          ],
+          Array [
+            "Pipeline version ID",
+            "not found",
+          ],
+          Array [
             "Description",
             "test job description",
           ],
           Array [
             "Created at",
             "9/5/2018, 4:03:02 AM",
+          ],
+          Array [
+            "Updated at",
+            "-",
           ],
         ]
       }

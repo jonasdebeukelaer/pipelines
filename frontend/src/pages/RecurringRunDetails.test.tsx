@@ -211,6 +211,19 @@ describe('RecurringRunDetails', () => {
     expect(getJobSpy).toHaveBeenCalledTimes(2);
   });
 
+  it('has an Edit button, clicking it opens the edit page', async () => {
+    tree = shallow(<RecurringRunDetails {...generateProps()} />);
+    await TestUtils.flushPromises();
+    const instance = tree.instance() as RecurringRunDetails;
+    const editBtn = instance.getInitialToolbarState().actions[ButtonKeys.EDIT_RECURRING_RUN];
+    expect(editBtn).toBeDefined();
+    await editBtn!.action();
+    expect(historyPushSpy).toHaveBeenCalledTimes(1);
+    expect(historyPushSpy).toHaveBeenLastCalledWith(
+      RoutePage.EDIT_RECURRING_RUN.replace(':' + RouteParams.runId, fullTestJob!.id!),
+    );
+  });
+
   it('has a clone button, clicking it navigates to new run page', async () => {
     tree = shallow(<RecurringRunDetails {...generateProps()} />);
     await TestUtils.flushPromises();

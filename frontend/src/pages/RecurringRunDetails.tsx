@@ -47,6 +47,7 @@ class RecurringRunDetails extends Page<{}, RecurringRunConfigState> {
     const buttons = new Buttons(this.props, this.refresh.bind(this));
     return {
       actions: buttons
+        .editRecurringRun(() => this?.state?.run?.id)
         .cloneRecurringRun(() => (this.state.run ? [this.state.run.id!] : []), true)
         .refresh(this.refresh.bind(this))
         .enableRecurringRun(() => (this.state.run ? this.state.run.id! : ''))
@@ -70,8 +71,11 @@ class RecurringRunDetails extends Page<{}, RecurringRunConfigState> {
     let triggerDetails: Array<KeyValue<string>> = [];
     if (run && run.pipeline_spec) {
       runDetails = [
-        ['Description', run.description!],
+        ['Pipeline Name', RunUtils.getPipelineName(run) || 'not found'],
+        ['Pipeline version ID', RunUtils.getPipelineVersionId(run) || 'not found'],
+        ['Description', run.description],
         ['Created at', formatDateString(run.created_at)],
+        ['Updated at', formatDateString(run.updated_at)],
       ];
       inputParameters = (run.pipeline_spec.parameters || []).map(p => [
         p.name || '',

@@ -226,6 +226,27 @@ export default (app: express.Application) => {
     }, 1000);
   });
 
+  app.put(v1beta1Prefix + '/jobs/:jid', (req, res) => {
+    setTimeout(() => {
+      const receivedJob: ApiJob = req.body;
+      let job = fixedData.jobs.find(j => j.id === req.params.jid);
+      if (job) {
+        job.name = receivedJob.name;
+        job.description = receivedJob.description;
+        job.trigger = receivedJob.trigger;
+        job.max_concurrency = receivedJob.max_concurrency;
+        job.no_catchup = receivedJob.no_catchup;
+        if (!!job.pipeline_spec && !!receivedJob.pipeline_spec) {
+          job.pipeline_spec.parameters = receivedJob.pipeline_spec.parameters;
+        }
+        job.updated_at = new Date();
+        res.json({});
+      } else {
+        res.status(404).send('Cannot find a job with id ' + req.params.jid);
+      }
+    }, 1000);
+  });
+
   app.all(v1beta1Prefix + '/jobs/:jid', (req, res) => {
     res.header('Content-Type', 'application/json');
     switch (req.method) {
@@ -350,7 +371,7 @@ export default (app: express.Application) => {
         job.enabled = true;
         res.json({});
       } else {
-        res.status(500).send('Cannot find a job with id ' + req.params.jid);
+        res.status(404).send('Cannot find a job with id ' + req.params.jid);
       }
     }, 1000);
   });
@@ -362,7 +383,7 @@ export default (app: express.Application) => {
         job.enabled = false;
         res.json({});
       } else {
-        res.status(500).send('Cannot find a job with id ' + req.params.jid);
+        res.status(404).send('Cannot find a job with id ' + req.params.jid);
       }
     }, 1000);
   });

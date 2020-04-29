@@ -151,7 +151,7 @@ exports[`Compare creates a map of viewers 1`] = `
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -352,7 +352,7 @@ exports[`Compare creates an extra aggregation plot for compatible viewers 1`] = 
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -604,7 +604,7 @@ exports[`Compare displays a run's metrics if the run has any 1`] = `
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -750,7 +750,7 @@ exports[`Compare displays metrics from multiple runs 1`] = `
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -900,7 +900,7 @@ exports[`Compare displays parameters from multiple runs 1`] = `
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -1053,7 +1053,7 @@ exports[`Compare displays run's parameters if the run has any 1`] = `
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -1194,7 +1194,7 @@ exports[`Compare does not show viewers for deselected runs 1`] = `
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -1318,7 +1318,7 @@ exports[`Compare expands all sections if they were collapsed 1`] = `
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -1568,7 +1568,7 @@ exports[`Compare renders a page with multiple runs 1`] = `
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -1694,7 +1694,7 @@ exports[`Compare renders a page with no runs 1`] = `
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [

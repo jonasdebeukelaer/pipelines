@@ -618,6 +618,57 @@ export const JobServiceApiFetchParamCreator = function(configuration?: Configura
     },
     /**
      *
+     * @summary Update an existing job.
+     * @param {ApiJob} body The job to be updated
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    updateJob(body: ApiJob, options: any = {}): FetchArgs {
+      // verify required parameter 'body' is not null or undefined
+      if (body === null || body === undefined) {
+        throw new RequiredError(
+          'body',
+          'Required parameter body was null or undefined when calling updateJob.',
+        );
+      }
+      const localVarPath = `/apis/v1beta1/jobs/${body.id}`;
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication Bearer required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue =
+          typeof configuration.apiKey === 'function'
+            ? configuration.apiKey('authorization')
+            : configuration.apiKey;
+        localVarHeaderParameter['authorization'] = localVarApiKeyValue;
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+      const needsSerialization =
+        <any>'ApiJob' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      localVarRequestOptions.body = needsSerialization ? JSON.stringify(body || {}) : body || '';
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
      * @summary Restarts a job that was previously stopped. All runs associated with the job will continue.
      * @param {string} id The ID of the job to be enabled
      * @param {*} [options] Override http request option.
@@ -895,6 +946,31 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
     },
     /**
      *
+     * @summary Update an existing job.
+     * @param {ApiJob} body The job to be updated
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    updateJob(
+      body: ApiJob,
+      options?: any,
+    ): (fetch?: FetchAPI, basePath?: string) => Promise<ApiJob> {
+      const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).updateJob(
+        body,
+        options,
+      );
+      return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then(response => {
+          if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
+     *
      * @summary Find a specific job by ID.
      * @param {string} id The ID of the job to be retrieved
      * @param {*} [options] Override http request option.
@@ -1092,6 +1168,7 @@ export class JobServiceApi extends BaseAPI {
     return JobServiceApiFp(this.configuration).deleteJob(id, options)(this.fetch, this.basePath);
   }
 
+  // TODO: merge into updateJob
   /**
    *
    * @summary Stops a job and all its associated runs. The job is not deleted.
@@ -1104,6 +1181,7 @@ export class JobServiceApi extends BaseAPI {
     return JobServiceApiFp(this.configuration).disableJob(id, options)(this.fetch, this.basePath);
   }
 
+  // TODO: merge into updateJob
   /**
    *
    * @summary Restarts a job that was previously stopped. All runs associated with the job will continue.
@@ -1114,6 +1192,18 @@ export class JobServiceApi extends BaseAPI {
    */
   public enableJob(id: string, options?: any) {
     return JobServiceApiFp(this.configuration).enableJob(id, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   *
+   * @summary Updates configuration of a job
+   * @param {string} body The job api object
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof JobServiceApi
+   */
+  public updateJob(body: ApiJob, options?: any) {
+    return JobServiceApiFp(this.configuration).updateJob(body, options)(this.fetch, this.basePath);
   }
 
   /**

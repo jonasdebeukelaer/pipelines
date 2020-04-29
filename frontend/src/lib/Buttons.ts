@@ -17,7 +17,7 @@
 import AddIcon from '@material-ui/icons/Add';
 import CollapseIcon from '@material-ui/icons/UnfoldLess';
 import ExpandIcon from '@material-ui/icons/UnfoldMore';
-import { QUERY_PARAMS, RoutePage } from '../components/Router';
+import { QUERY_PARAMS, RoutePage, RouteParams } from '../components/Router';
 import { ToolbarActionMap } from '../components/Toolbar';
 import { PageProps } from '../pages/Page';
 import { Apis } from './Apis';
@@ -28,6 +28,7 @@ export enum ButtonKeys {
   ARCHIVE = 'archive',
   CLONE_RUN = 'cloneRun',
   CLONE_RECURRING_RUN = 'cloneRecurringRun',
+  EDIT_RECURRING_RUN = 'editRecurringRun',
   RETRY = 'retry',
   COLLAPSE = 'collapse',
   COMPARE = 'compare',
@@ -120,6 +121,16 @@ export default class Buttons {
       id: 'retryBtn',
       title: 'Retry',
       tooltip: 'Retry',
+    };
+    return this;
+  }
+
+  public editRecurringRun(geRunId: () => string | undefined): Buttons {
+    this._map[ButtonKeys.EDIT_RECURRING_RUN] = {
+      action: () => this._editRecurringRun(geRunId()),
+      id: 'editBtn',
+      title: 'Edit',
+      tooltip: 'Edit recurring run configuration',
     };
     return this;
   }
@@ -312,7 +323,7 @@ export default class Buttons {
       action,
       id: 'refreshBtn',
       title: 'Refresh',
-      tooltip: 'Refresh the list',
+      tooltip: 'Refresh data',
     };
     return this;
   }
@@ -380,6 +391,20 @@ export default class Buttons {
       }
       const searchString = this._urlParser.build(searchTerms);
       this._props.history.push(RoutePage.NEW_RUN + searchString);
+    }
+  }
+
+  private _editRecurringRun(runId: string | undefined): void {
+    if (!!runId) {
+      this._props.history.push(
+        RoutePage.EDIT_RECURRING_RUN.replace(':' + RouteParams.runId, runId),
+      );
+    } else {
+      this._props.updateDialog({
+        buttons: [{ text: 'Dismiss' }],
+        content: 'recurring run ID not found',
+        title: 'Failed to open edit page',
+      });
     }
   }
 
@@ -660,7 +685,7 @@ export default class Buttons {
     const searchString = this._urlParser.build(
       Object.assign(
         { [QUERY_PARAMS.experimentId]: experimentId || '' },
-        isRecurring ? { [QUERY_PARAMS.isRecurring]: '1' } : {},
+        ...[isRecurring && { [QUERY_PARAMS.isRecurring]: '1' }],
       ),
     );
     this._props.history.push(RoutePage.NEW_RUN + searchString);

@@ -77,7 +77,7 @@ exports[`AllRunsList renders all runs 1`] = `
             "action": [Function],
             "id": "refreshBtn",
             "title": "Refresh",
-            "tooltip": "Refresh the list",
+            "tooltip": "Refresh data",
           },
         },
         "breadcrumbs": Array [],

@@ -168,7 +168,7 @@ exports[`ExperimentDetails fetches this experiment's recurring runs 1`] = `
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -217,7 +217,7 @@ exports[`ExperimentDetails fetches this experiment's recurring runs 1`] = `
                   "action": [Function],
                   "id": "refreshBtn",
                   "title": "Refresh",
-                  "tooltip": "Refresh the list",
+                  "tooltip": "Refresh data",
                 },
               },
               "breadcrumbs": Array [
@@ -430,7 +430,7 @@ exports[`ExperimentDetails removes all description text after second newline and
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -479,7 +479,7 @@ exports[`ExperimentDetails removes all description text after second newline and
                   "action": [Function],
                   "id": "refreshBtn",
                   "title": "Refresh",
-                  "tooltip": "Refresh the list",
+                  "tooltip": "Refresh data",
                 },
               },
               "breadcrumbs": Array [
@@ -679,7 +679,7 @@ exports[`ExperimentDetails renders a page with no runs or recurring runs 1`] = `
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -728,7 +728,7 @@ exports[`ExperimentDetails renders a page with no runs or recurring runs 1`] = `
                   "action": [Function],
                   "id": "refreshBtn",
                   "title": "Refresh",
-                  "tooltip": "Refresh the list",
+                  "tooltip": "Refresh data",
                 },
               },
               "breadcrumbs": Array [
@@ -926,7 +926,7 @@ exports[`ExperimentDetails uses an empty string if the experiment has no descrip
               "action": [Function],
               "id": "refreshBtn",
               "title": "Refresh",
-              "tooltip": "Refresh the list",
+              "tooltip": "Refresh data",
             },
           },
           "breadcrumbs": Array [
@@ -975,7 +975,7 @@ exports[`ExperimentDetails uses an empty string if the experiment has no descrip
                   "action": [Function],
                   "id": "refreshBtn",
                   "title": "Refresh",
-                  "tooltip": "Refresh the list",
+                  "tooltip": "Refresh data",
                 },
               },
               "breadcrumbs": Array [
